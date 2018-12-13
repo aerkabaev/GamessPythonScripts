@@ -16,17 +16,25 @@ class Method(Enum):
     MP2 = ('*Method*','dfttyp = b3lyp')
 
 class Input(object):
-    def __init__(self, template_path):
-        with open(template_path, 'r') as file:
-            self.template = file.read()
+    def __init__(self, template, gamess_command_path, gamess_string):
+        self.template = template
+        self.gamess_command_path = gamess_command_path
+    #def __init__(self, template_path):
+        # with open(template_path, 'r') as file:
+        #     self.template = file.read()
 
-    def Generate(self, output_path, rule_list):
+    def GenerateInput(self, output_path, rule_list):
         out = self.template
         out = reduce(lambda a, kv: a.replace(*kv), rule_list, out)
 
         with open(output_path, 'w') as file:
             file.write(out)
 
+    def GenerateStartCommand(self, output_path, input_file_name, output_file_name):
+        # for windows:
+        out = "del restart\\*.dat \n del restart\\*.rst \n @CALL %s %s %s %s". format(self.gamess_command_path, input_file_name, self.gamess_string, output_file_name)
+        with open(output_path, 'w') as file:
+            file.write(out)
 # input = InputFile('C:\\Users\\Public\\gamess-64\\template.inp')
 # rule_list = ExeTyp.Run.value, Method.DFT.value, RunTyp.Optimize.value, ('*Name*', 'name'), ('*Symmetry*', 'C1'), ('*Geometry*', 'geometry')
 # input.Generate('C:\\Users\\Public\\gamess-64\\output.inp', rule_list)
