@@ -15,10 +15,11 @@ class Method(Enum):
     DFT = ('*Method*','mplevl = 2')
     MP2 = ('*Method*','dfttyp = b3lyp')
 
-class Input(object):
+class InputFiles(object):
     def __init__(self, template, gamess_command_path, gamess_string):
         self.template = template
         self.gamess_command_path = gamess_command_path
+        self.gamess_string = gamess_string
     #def __init__(self, template_path):
         # with open(template_path, 'r') as file:
         #     self.template = file.read()
