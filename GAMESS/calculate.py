@@ -28,26 +28,32 @@ class Calculate(object):
             raise Exception('Calculation error')
 
     def run(self, file_name, folder, method):
-        #single_run(self, input_file_path, output_file_path, cmd_file_path, rule_list):
-        pass
-# create check input files
+        # TODO: parse structure file
+        name_rule = ('*Name*', 'name')
+        symmetry_rule = ('*Symmetry*', 'C1')
+        geometry_rule = ('*Geometry*', 'geometry')
 
-# run check
+        # run check
+        rule_list = inputfiles.ExeTyp.Check.value, method, inputfiles.RunTyp.Energy.value, name_rule, symmetry_rule, geometry_rule
+        input_file_path = ''
+        output_file_path = ''
+        cmd_file_path = ''
+        self.single_run(self, input_file_path, output_file_path, cmd_file_path, rule_list)
 
-# check
+        # check
 
-# create optimize input
+        # run optimize
+        rule_list = inputfiles.ExeTyp.Run.value, method, inputfiles.RunTyp.Optimize.value, name_rule, symmetry_rule, geometry_rule
+        input_file_path = ''
+        output_file_path = ''
+        cmd_file_path = ''
+        self.single_run(self, input_file_path, output_file_path, cmd_file_path, rule_list)
 
-# run optimize
-
-# check
-
-# get optimized configuration
-
-# create hessian input
-
-# run hessian
-
-# check
-
-# get optimized configuration
+        # run hessian
+        geometry_rule = ('*Geometry*', 'geometry')  # TODO: read from optimized file
+        rule_list = inputfiles.ExeTyp.Run.value, method, inputfiles.RunTyp.Hessian.value, name_rule, symmetry_rule, geometry_rule
+        input_file_path = ''
+        output_file_path = ''
+        cmd_file_path = ''
+        self.single_run(self, input_file_path, output_file_path, cmd_file_path, rule_list)
+        
