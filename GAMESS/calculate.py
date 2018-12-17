@@ -41,30 +41,11 @@ class Calculate(object):
             shutil.rmtree(working_folder, ignore_errors=True)
         os.makedirs(working_folder)
 
-        # TODO: move parsing to a separate module
         # parse structure file
-        with open(structure_file_path, 'r') as file:
-            input_structure = file.read().splitlines()
-
-        if (not ('$DATA' in input_structure[0])) or (not ('$END' in input_structure[-1])):
-            raise Exception('Incorrect data format')
-
-        name_rule = ('*Name*', input_structure[1])
-
-        structure_index = 3
-        if 'C1' in input_structure[2]:
-            symmetry_rule = ('*Symmetry*', 'C1')
-        else:
-            symmetry_rule = ('*Symmetry*', input_structure[2] + '\n' + input_structure[3])
-            structure_index = 4
-
-        # TODO: not nice solution
-        geometry_lines = input_structure[structure_index+1:-1]
-        geometry = input_structure[structure_index]
-        for line in geometry_lines:
-            geometry += '\n'
-            geometry += line
-        geometry_rule = ('*Geometry*', geometry)
+        structure_file = inputfiles.StructureParser(structure_file_path)
+        name_rule = structure_file.name_rule
+        symmetry_rule = structure_file.symmetry_rule
+        geometry_rule = structure_file.geometry_rule
 
         cmd_file_path = os.path.join(working_folder, 'run.bat')
         input_file_path = self.path(working_folder, file_name, method, 'inp')
@@ -74,8 +55,6 @@ class Calculate(object):
         rule_list = inputfiles.ExeTyp.Check.value, method.value, charge,\
                     inputfiles.RunTyp.Energy.value, name_rule, symmetry_rule, geometry_rule
         self.single_run(input_file_path, output_file_path, cmd_file_path, rule_list)
-
-        # check
 
         # run optimize
         output_file_path = self.path(working_folder, file_name, method, 'opt')

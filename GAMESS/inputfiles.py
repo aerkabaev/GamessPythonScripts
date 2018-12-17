@@ -45,3 +45,28 @@ class InputFiles(object):
                                                                                      output_file_name)
         with open(output_path, 'w') as file:
             file.write(out)
+
+
+class StructureParser(object):
+    def __init__(self, structure_file_path):
+        with open(structure_file_path, 'r') as file:
+            input_structure = file.read().splitlines()
+
+        if (not ('$DATA' in input_structure[0])) or (not ('$END' in input_structure[-1])):
+            raise Exception('Incorrect data format')
+
+        self.name_rule = ('*Name*', input_structure[1])
+        structure_index = 3
+        if 'C1' in input_structure[2]:
+            self.symmetry_rule = ('*Symmetry*', 'C1')
+        else:
+            self.symmetry_rule = ('*Symmetry*', input_structure[2] + '\n' + input_structure[3])
+            structure_index = 4
+
+        # TODO: not nice solution
+        geometry_lines = input_structure[structure_index+1:-1]
+        geometry = input_structure[structure_index]
+        for line in geometry_lines:
+            geometry += '\n'
+            geometry += line
+        self.geometry_rule = ('*Geometry*', geometry)
