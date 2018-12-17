@@ -44,7 +44,3 @@ class InputFiles(object):
                                                                                      output_file_name)
         with open(output_path, 'w') as file:
             file.write(out)
-
-# input = InputFile('C:\\Users\\Public\\gamess-64\\template.inp')
-# rule_list = ExeTyp.Run.value, Method.DFT.value, RunTyp.Optimize.value, ('*Name*', 'name'), ('*Symmetry*', 'C1'), ('*Geometry*', 'geometry')
-# input.Generate('C:\\Users\\Public\\gamess-64\\output.inp', rule_list)

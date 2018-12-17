@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="3ff73564-a778-478e-a96b-6b8a9b146438" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/calculate.py" beforeDir="false" afterPath="$PROJECT_DIR$/calculate.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inputfiles.py" beforeDir="false" afterPath="$PROJECT_DIR$/inputfiles.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,8 +16,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/inputfiles.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="12" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="12" />
+            <state relative-caret-position="765">
+              <caret line="45" column="27" selection-start-line="45" selection-start-column="27" selection-end-line="45" selection-end-column="27" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -32,8 +33,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/calculate.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="701">
-              <caret line="58" column="8" selection-start-line="58" selection-start-column="8" selection-end-line="58" selection-end-column="8" />
+            <state relative-caret-position="646">
+              <caret line="53" column="55" lean-forward="true" selection-start-line="53" selection-start-column="55" selection-end-line="53" selection-end-column="55" />
               <folding>
                 <element signature="e#0#17#0" expanded="true" />
               </folding>
@@ -49,8 +50,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/inputfiles.py" />
         <option value="$PROJECT_DIR$/calculate.py" />
+        <option value="$PROJECT_DIR$/inputfiles.py" />
       </list>
     </option>
   </component>
@@ -111,7 +112,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="580" y="200" width="1707" height="1000" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Favorites" side_tool="true" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2037148" />
@@ -135,8 +135,8 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/inputfiles.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="12" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="12" />
+        <state relative-caret-position="765">
+          <caret line="45" column="27" selection-start-line="45" selection-start-column="27" selection-end-line="45" selection-end-column="27" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
@@ -148,8 +148,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/calculate.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="701">
-          <caret line="58" column="8" selection-start-line="58" selection-start-column="8" selection-end-line="58" selection-end-column="8" />
+        <state relative-caret-position="646">
+          <caret line="53" column="55" lean-forward="true" selection-start-line="53" selection-start-column="55" selection-end-line="53" selection-end-column="55" />
           <folding>
             <element signature="e#0#17#0" expanded="true" />
           </folding>

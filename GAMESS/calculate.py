@@ -56,4 +56,4 @@ class Calculate(object):
         output_file_path = ''
         cmd_file_path = ''
         self.single_run(self, input_file_path, output_file_path, cmd_file_path, rule_list)
-        
+
