@@ -84,5 +84,6 @@ class Calculate(object):
         rule_list = inputfiles.ExeTyp.Run.value, method.value, inputfiles.RunTyp.Hessian.value, name_rule, symmetry_rule#, geometry_rule
         self.single_run(self, input_file_path, output_file_path, cmd_file_path, rule_list)
 
-ccc = Calculate('C:\\Users\\Public\\gamess-64\\template.inp', '', '')
-ccc.run('C:\\Users\\Public\\gamess-64\\struct.inp', 'C:\\Users\\Public\\gamess-64\\folder', 'filename', inputfiles.Method.DFT)
+print('dfdfd')
+#ccc = Calculate('C:\\Users\\Public\\gamess-64\\template.inp', '', '')
+#ccc.run('C:\\Users\\Public\\gamess-64\\struct.inp', 'C:\\Users\\Public\\gamess-64\\folder', 'filename', inputfiles.Method.DFT)
