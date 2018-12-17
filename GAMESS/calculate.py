@@ -3,13 +3,12 @@ import subprocess
 
 
 class Calculate(object):
-    def __init__(self, structure_file_path, template, gamess_command_path, gamess_string):
-        self.template = template
+    def __init__(self, template, gamess_command_path, gamess_string):
+        with open(template, 'r') as file:
+            self.template = file.read()
         self.gamess_command_path = gamess_command_path
         self.gamess_string = gamess_string
-        self.input = inputfiles.InputFiles()
-        with open(structure_file_path, 'r') as file:
-            self.input_structure = file.read()
+        self.input = inputfiles.InputFiles(self.template, self.gamess_command_path, self.gamess_string)
 
     def single_run(self, input_file_path, output_file_path, cmd_file_path, rule_list):
         # create input files
@@ -27,11 +26,24 @@ class Calculate(object):
         if not success:
             raise Exception('Calculation error')
 
-    def run(self, file_name, folder, method):
+    def run(self, structure_file_path, folder, method):
         # TODO: parse structure file
-        name_rule = ('*Name*', 'name')
-        symmetry_rule = ('*Symmetry*', 'C1')
-        geometry_rule = ('*Geometry*', 'geometry')
+        with open(structure_file_path, 'r') as file:
+            input_structure = file.readlines()
+
+        if (not ('$DATA' in input_structure[0])) or (not ('$END' in input_structure[-1])):
+            raise Exception('Incorrect data format')
+
+        name_rule = ('*Name*', input_structure[1])
+
+        structure_index = 4
+        if 'C1' in input_structure[3]:
+            symmetry_rule = ('*Symmetry*', 'C1')
+        else:
+            symmetry_rule = ('*Symmetry*', input_structure[3] + input_structure[4])
+            structure_index = 5
+
+        geometry_rule = ('*Geometry*', input_structure[structure_index::-2])
 
         # run check
         rule_list = inputfiles.ExeTyp.Check.value, method, inputfiles.RunTyp.Energy.value, name_rule, symmetry_rule, geometry_rule
