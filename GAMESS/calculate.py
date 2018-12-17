@@ -1,5 +1,7 @@
 import inputfiles
 import subprocess
+import os
+import shutil
 
 
 class Calculate(object):
@@ -26,8 +28,21 @@ class Calculate(object):
         if not success:
             raise Exception('Calculation error')
 
-    def run(self, structure_file_path, folder, method):
-        # TODO: parse structure file
+    @staticmethod
+    def path(working_folder, file_name, method, ext):
+        out = os.path.join(working_folder, file_name)
+        out += '.' + method.name + '.' + ext
+        return out
+
+    def run(self, structure_file_path, working_folder, file_name, method):
+        if not os.path.exists(structure_file_path):
+            raise FileNotFoundError
+        if os.path.exists(working_folder):
+            shutil.rmtree(working_folder, ignore_errors=True)
+        else:
+            os.mkdir(working_folder)
+
+        # parse structure file
         with open(structure_file_path, 'r') as file:
             input_structure = file.readlines()
 
@@ -45,27 +60,26 @@ class Calculate(object):
 
         geometry_rule = ('*Geometry*', input_structure[structure_index::-2])
 
+        cmd_file_path = 'run.bat'
+        input_file_path = self.path(working_folder, file_name, method, 'inp')
+
         # run check
+        output_file_path = self.path(working_folder, file_name, method, 'check')
         rule_list = inputfiles.ExeTyp.Check.value, method, inputfiles.RunTyp.Energy.value, name_rule, symmetry_rule, geometry_rule
-        input_file_path = ''
-        output_file_path = ''
-        cmd_file_path = ''
         self.single_run(self, input_file_path, output_file_path, cmd_file_path, rule_list)
 
         # check
 
         # run optimize
+        output_file_path = self.path(working_folder, file_name, method, 'opt')
         rule_list = inputfiles.ExeTyp.Run.value, method, inputfiles.RunTyp.Optimize.value, name_rule, symmetry_rule, geometry_rule
-        input_file_path = ''
-        output_file_path = ''
-        cmd_file_path = ''
         self.single_run(self, input_file_path, output_file_path, cmd_file_path, rule_list)
 
+        # TODO: use optimized geometry
+        geometry_rule = ('*Geometry*', 'geometry')
+
         # run hessian
-        geometry_rule = ('*Geometry*', 'geometry')  # TODO: read from optimized file
+        output_file_path = self.path(working_folder, file_name, method, 'hess')
         rule_list = inputfiles.ExeTyp.Run.value, method, inputfiles.RunTyp.Hessian.value, name_rule, symmetry_rule, geometry_rule
-        input_file_path = ''
-        output_file_path = ''
-        cmd_file_path = ''
         self.single_run(self, input_file_path, output_file_path, cmd_file_path, rule_list)
 
