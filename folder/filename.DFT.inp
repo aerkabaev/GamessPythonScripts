@@ -1,0 +1,44 @@
+ $Contrl
+SCFTYP=RHF
+ICHARG=0
+CITYP=NONE MULT=1
+RUNTYP=Energy
+UNITS=angs
+EXETYP=Check
+MAXIT=200
+mplevl = 2
+!pp = read
+ $END
+
+ $SYSTEM TIMLIM=60000 MEMORY=8000000 MEMDDI = 1000 $END
+ $BASIS
+ GBASIS=N311 NGAUSS=6 NDFUNC = 1 NPFUNC = 1 
+ $END
+
+ $FORCE
+ nvib=2
+ METHOD=NUMERIC
+ $END
+ 
+ $STATPT NSTEP = 1000 $END  
+
+!------------------------------------------------------------------—
+ $SCF SHIFT=.true. SOSCF=.false. DEM=.false.
+ MAXDII=40 DIRSCF=.t.
+ $END
+!------------------------------------------------------------------—
+
+ $GUESS symden=.true. guess=huckel $END
+ 
+ $DATA
+ Li4Br4
+Td
+
+ LITHIUM     3.0   1.0623740708  -1.0623740678   1.0623740708
+ BROMINE    35.0   1.3998081528   1.3998081528   1.3998081528
+ $END
+ 
+ $PCM
+  SMD=.true.
+  SOLVNT=ACETNTRL
+ $END

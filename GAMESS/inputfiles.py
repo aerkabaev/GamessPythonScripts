@@ -37,8 +37,9 @@ class InputFiles(object):
             file.write(out)
 
     def create_run_command(self, output_path, input_file_name, output_file_name):
+        # TODO: do it not only for windows
         # for windows:
-        out = 'del restart\\*.dat\n del restart\\*.rst\n @CALL %s %s %s %s'.format(self.gamess_command_path,
+        out = 'del restart\\*.dat\ndel restart\\*.rst\n@CALL {0} {1} {2} {3}'.format(self.gamess_command_path,
                                                                                      input_file_name,
                                                                                      self.gamess_string,
                                                                                      output_file_name)
