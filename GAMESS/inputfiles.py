@@ -21,16 +21,16 @@ class Method(Enum):
 
 class InputFiles(object):
     def __init__(self, template, gamess_command_path, gamess_string):
-        self.template = template
-        self.gamess_command_path = gamess_command_path
-        self.gamess_string = gamess_string
+        self._template = template
+        self._gamess_command_path = gamess_command_path
+        self._gamess_string = gamess_string
 
     # def __init__(self, template_path):
     # with open(template_path, 'r') as file:
     #     self.template = file.read()
 
     def create_input(self, output_path, rule_list):
-        out = self.template
+        out = self._template
         out = reduce(lambda a, kv: a.replace(*kv), rule_list, out)
 
         with open(output_path, 'w') as file:
@@ -39,9 +39,9 @@ class InputFiles(object):
     def create_run_command(self, output_path, input_file_name, output_file_name):
         # TODO: do it not only for windows
         # for windows:
-        out = 'del restart\\*.dat\ndel restart\\*.rst\n@CALL {0} {1} {2} {3}'.format(self.gamess_command_path,
+        out = 'del restart\\*.dat\ndel restart\\*.rst\n@CALL {0} {1} {2} {3}'.format(self._gamess_command_path,
                                                                                      input_file_name,
-                                                                                     self.gamess_string,
+                                                                                     self._gamess_string,
                                                                                      output_file_name)
         with open(output_path, 'w') as file:
             file.write(out)

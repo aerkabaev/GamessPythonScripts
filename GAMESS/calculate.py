@@ -8,14 +8,14 @@ class Calculate(object):
     def __init__(self, template, gamess_command_path, gamess_string):
         with open(template, 'r') as file:
             self.template = file.read()
-        self.gamess_command_path = gamess_command_path
-        self.gamess_string = gamess_string
-        self.input = inputfiles.InputFiles(self.template, self.gamess_command_path, self.gamess_string)
+        self._gamess_command_path = gamess_command_path
+        self._gamess_string = gamess_string
+        self._input = inputfiles.InputFiles(self.template, self._gamess_command_path, self._gamess_string)
 
     def single_run(self, input_file_path, output_file_path, cmd_file_path, rule_list):
         # create input files
-        self.input.create_input(input_file_path, rule_list)
-        self.input.create_run_command(cmd_file_path, input_file_path, output_file_path)
+        self._input.create_input(input_file_path, rule_list)
+        self._input.create_run_command(cmd_file_path, input_file_path, output_file_path)
 
         # run
         subprocess.check_call(cmd_file_path, shell=True)
