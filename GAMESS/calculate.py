@@ -5,12 +5,11 @@ import shutil
 
 
 class Calculate(object):
-    def __init__(self, template, gamess_command_path, gamess_string):
+    def __init__(self, template, gamess_path, gamess_command, gamess_parameters):
         with open(template, 'r') as file:
             self.template = file.read()
-        self._gamess_command_path = gamess_command_path
-        self._gamess_string = gamess_string
-        self._input = inputfiles.InputFiles(self.template, self._gamess_command_path, self._gamess_string)
+        self._gamess_path = gamess_path
+        self._input = inputfiles.InputFiles(self.template, gamess_path, gamess_command, gamess_parameters)
 
     def single_run(self, input_file_path, output_file_path, cmd_file_path, rule_list):
         # create input files
@@ -18,6 +17,8 @@ class Calculate(object):
         self._input.create_run_command(cmd_file_path, input_file_path, output_file_path)
 
         # run
+        # requirement of GAMESS-US for windows: to be started in GAMESS working folder:
+        os.chdir(self._gamess_path)
         subprocess.check_call(cmd_file_path, shell=True)
 
         # check
@@ -37,6 +38,7 @@ class Calculate(object):
     def run(self, structure_file_path, working_folder, file_name, method, charge=('*Charge*','0')):
         if not os.path.exists(structure_file_path):
             raise FileNotFoundError("structure_file_path")
+        # TODO: clear the folder, don't delete it
         if os.path.isdir(working_folder):
             shutil.rmtree(working_folder, ignore_errors=True)
         os.makedirs(working_folder)
@@ -48,7 +50,8 @@ class Calculate(object):
         geometry_rule = structure_file.geometry_rule
 
         cmd_file_path = os.path.join(working_folder, 'run.bat')
-        input_file_path = self.path(working_folder, file_name, method, 'inp')
+        # input file must be in gamess folder. facepalm
+        input_file_path = self.path(self._gamess_path, file_name, method, 'inp')
 
         # run check
         output_file_path = self.path(working_folder, file_name, method, 'check')

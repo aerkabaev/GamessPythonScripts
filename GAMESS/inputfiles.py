@@ -15,15 +15,16 @@ class RunTyp(Enum):
 
 class Method(Enum):
     RHF = ('*Method*', '')
-    DFT = ('*Method*', 'mplevl = 2')
-    MP2 = ('*Method*', 'dfttyp = b3lyp')
+    DFT = ('*Method*', 'dfttyp = b3lyp')
+    MP2 = ('*Method*', 'mplevl = 2')
 
 
 class InputFiles(object):
-    def __init__(self, template, gamess_command_path, gamess_string):
+    def __init__(self, template, gamess_path, gamess_command, gamess_parameters):
         self._template = template
-        self._gamess_command_path = gamess_command_path
-        self._gamess_string = gamess_string
+        self._gamess_path = gamess_path
+        self._gamess_command = gamess_command
+        self._gamess_parameters = gamess_parameters
 
     # def __init__(self, template_path):
     # with open(template_path, 'r') as file:
@@ -39,9 +40,10 @@ class InputFiles(object):
     def create_run_command(self, output_path, input_file_name, output_file_name):
         # TODO: do it not only for windows
         # for windows:
-        out = 'del restart\\*.dat\ndel restart\\*.rst\n@CALL {0} {1} {2} {3}'.format(self._gamess_command_path,
+
+        out = 'del restart\\*.dat\ndel restart\\*.rst\n@CALL {0} {1} {2} {3}'.format(self._gamess_command,
                                                                                      input_file_name,
-                                                                                     self._gamess_string,
+                                                                                     self._gamess_parameters,
                                                                                      output_file_name)
         with open(output_path, 'w') as file:
             file.write(out)
