@@ -2,6 +2,7 @@ import inputfiles
 import subprocess
 import os
 import shutil
+import outputfiles
 
 
 class Calculate(object):
@@ -49,8 +50,8 @@ class Calculate(object):
         symmetry_rule = structure_file.symmetry_rule
         geometry_rule = structure_file.geometry_rule
 
-        cmd_file_path = os.path.join(working_folder, 'run.bat')
         # input file must be in gamess folder. facepalm
+        cmd_file_path = os.path.join(working_folder, 'run.bat')
         input_file_path = self.path(self._gamess_path, file_name, method, 'inp')
 
         # run check
@@ -65,11 +66,9 @@ class Calculate(object):
                     inputfiles.RunTyp.Optimize.value, name_rule, symmetry_rule, geometry_rule
         self.single_run(input_file_path, output_file_path, cmd_file_path, rule_list)
 
-        # TODO: use optimized geometry
-        geometry_rule = ('*Geometry*', 'geometry')
-
         # run hessian
+        geometry_rule = outputfiles.OutputParser.get_unique_optimized_geometry_rule(output_file_path)
         output_file_path = self.path(working_folder, file_name, method, 'hess')
         rule_list = inputfiles.ExeTyp.Run.value, method.value, charge, \
                     inputfiles.RunTyp.Hessian.value, name_rule, symmetry_rule, geometry_rule
-        self.single_run(self, input_file_path, output_file_path, cmd_file_path, rule_list)
+        self.single_run(input_file_path, output_file_path, cmd_file_path, rule_list)
