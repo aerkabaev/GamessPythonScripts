@@ -27,7 +27,7 @@ class OutputParser(object):
             raise Exception('no any geometry lines in file')
         # TODO: not nice solution
         geometry = ''
-        for line in structure_lines[1:-2]:
+        for line in structure_lines[0:-1]:
             geometry += line
             geometry += '\n'
         geometry += structure_lines[-1]
