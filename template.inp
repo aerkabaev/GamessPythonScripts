@@ -36,7 +36,7 @@ MAXIT=200
 *Geometry*
  $END
  
-! $PCM
-!  SMD=.true.
-!  SOLVNT=ACETNTRL
-! $END
+ $PCM
+  SMD=.true.
+  SOLVNT=ACETNTRL
+ $END

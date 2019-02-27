@@ -68,8 +68,12 @@ class Calculate(object):
                         inputfiles.RunTyp.Optimize.value, name_rule, symmetry_rule, geometry_rule
             self.single_run(input_file_path, output_file_path, cmd_file_path, rule_list)
 
+        natoms = geometry_rule[1].__len__()
+
         # run hessian
         geometry_rule = outputfiles.OutputParser.get_unique_optimized_geometry_rule(output_file_path)
+        if geometry_rule[1].__len__() != natoms :
+            symmetry_rule = ('*Symmetry*', 'C1')
         output_file_path = self.path(working_folder, file_name, method, 'hess')
         if not os.path.exists(output_file_path):
             rule_list = inputfiles.ExeTyp.Run.value, method.value, charge_rule, \

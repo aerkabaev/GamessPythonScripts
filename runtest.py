@@ -8,7 +8,7 @@ def list_files(directory, extension):
     return (f for f in os.listdir(directory) if f.endswith('.' + extension))
 
 calculate_method = calculate.Calculate('template.inp', 'C:\\Users\\Public\\gamess-64\\', 'rungms.bat',
-                                       '2018-R1-pgi-mkl 6 0')
+                                       '2018-R1-pgi-mkl 4 0')
 main_dir = 'C:\\Users\\Public\\gamess-64\\CF3SO3_CH3CN_n\\'
 files = files = list_files(main_dir, "txt")
 
