@@ -34,3 +34,26 @@ class OutputParser(object):
         geometry_rule = ('*Geometry*', geometry)
 
         return geometry_rule
+
+    @staticmethod
+    def get_energy(data):
+        start_position = data.find('IVIB=   0')
+        start_position = data.find('E=    ', start_position)+4
+        end_position = data.find('\n', start_position)
+        energy = float(data[start_position:end_position])
+        return energy
+
+    @staticmethod
+    def get_vibrations(data):
+        start_position = data.find('MODE FREQ(CM**-1)  SYMMETRY  RED. MASS  IR INTENS.')
+        end_position = data.find('THERMOCHEMISTRY', start_position)
+        freq_lines = data[start_position:end_position].splitlines()[0:-2]
+
+        # TODO: not nice solution
+        freqs = ''
+        for line in freq_lines:
+            freqs += line
+            freqs += '\n'
+
+        return freqs
+

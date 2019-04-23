@@ -75,3 +75,10 @@ class Calculate(object):
             rule_list = inputfiles.ExeTyp.Run.value, method.value, charge_rule, \
                         inputfiles.RunTyp.Hessian.value, name_rule, symmetry_rule, geometry_rule
             self.single_run(input_file_path, output_file_path, cmd_file_path, rule_list)
+
+        with open(output_file_path, 'r') as file:
+            data = file.read()
+            energy = outputfiles.OutputParser.get_energy(data)
+            print(energy)
+            freqs = outputfiles.OutputParser.get_vibrations(data)
+            print(freqs)
